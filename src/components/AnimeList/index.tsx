@@ -11,21 +11,25 @@ interface AnimeListProps {
 }
 
 const AnimeList: React.FC<AnimeListProps> = ({ search, selectedFormat }) => {
-  const { animes, loading, error, fetchMoreAnimes, hasMore } = useFetchAnimes(search, selectedFormat);
+  const { animes, loading, error, handleFetchMore, hasMore } = useFetchAnimes(search, selectedFormat);
 
-  if (loading) {
+  if (loading && animes.length === 0) {
     return <Loading />;
   }
 
   if (error) {
     return (
       <Modal>
-        {error}
+        {error.includes("Erro ao buscar animes") ? (
+          <div>Erro ao carregar animes. Verifique sua conexão e tente novamente.</div>
+        ) : (
+          <div>Ocorreu um erro inesperado. Tente novamente mais tarde.</div>
+        )}
       </Modal>
     );
   }
 
-  if (!animes.length && search) {
+  if (!loading && animes.length === 0 && search) {
     return <div>Nenhum resultado encontrado para esta busca.</div>;
   }
 
@@ -36,11 +40,12 @@ const AnimeList: React.FC<AnimeListProps> = ({ search, selectedFormat }) => {
           <AnimeCard key={anime.id} anime={anime} />
         ))}
       </AnimeGrid>
-      {hasMore && !loading && (
-        <LoadMoreButton onClick={fetchMoreAnimes} disabled={loading}>
-          + Ver mais
+      {hasMore && (
+        <LoadMoreButton onClick={handleFetchMore} disabled={loading}>
+          {loading ? "Carregando..." : "+ Ver mais"}
         </LoadMoreButton>
       )}
+      {loading && animes.length > 0 && <Loading />}
     </>
   );
 };

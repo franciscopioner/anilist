@@ -1,28 +1,37 @@
-export async function fetchAnimes(search = "", format?: string) {
-  const query = `
-  query ($search: String, $format: MediaFormat) {
-    Page (perPage: 12) {
-      media (search: $search, format: $format) {
-        id
-        title { romaji }
-        coverImage { large }
-        averageScore
-        format
-        genres
-      }
-    }
-  }
-`;
+import axios from "axios";
 
-  const response = await fetch("https://graphql.anilist.co", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      query,
-      variables: { search, format },
-    }),
-  });
+const API_URL = "https://graphql.anilist.co";
 
-  const { data } = await response.json();
-  return data.Page.media;
+interface FetchAnimesParams {
+  search?: string;
+  format?: string;
+  page?: number;
+  perPage?: number;
 }
+
+export const fetchAnimes = async ({ search, format, page = 1, perPage = 12 }: FetchAnimesParams) => {
+  try {
+    const response = await axios.post(API_URL, {
+      query: `
+        query ($search: String, $format: MediaFormat, $page: Int, $perPage: Int) {
+          Page(page: $page, perPage: $perPage) {
+            media(search: $search, format: $format, type: ANIME) {
+              id
+              title { romaji }
+              coverImage { large }
+              format
+              averageScore
+              genres
+            }
+            pageInfo { hasNextPage }
+          }
+        }
+      `,
+      variables: { search: search || null, format: format !== "All" ? format : undefined, page, perPage },
+    });
+
+    return response.data.data.Page;
+  } catch (error) {
+    throw new Error(`Erro ao buscar animes. Verifique sua conexão e tente novamente. ERRO: ${error}`);
+  }
+};

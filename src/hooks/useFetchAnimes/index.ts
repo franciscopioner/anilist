@@ -1,16 +1,15 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
-import { fetchAnimes } from "../api/anilist";
-import { Anime } from "../types";
+import { useState, useEffect, useCallback } from "react";
+import { fetchAnimes } from "../../api/anilist";
+import { Anime } from "../../types";
 
 export const useFetchAnimes = (search: string, format: string) => {
   const [animes, setAnimes] = useState<Anime[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
-  const fetchMoreAnimes = useCallback(async () => {
-    if (!hasMore || loading) return;
+  const fetchData = useCallback(async () => {
     setLoading(true);
     setError(null);
 
@@ -18,23 +17,28 @@ export const useFetchAnimes = (search: string, format: string) => {
       const data = await fetchAnimes({ search, format, page });
       setAnimes((prev) => (page === 1 ? data.media : [...prev, ...data.media]));
       setHasMore(data.pageInfo.hasNextPage);
-      setPage((prevPage) => prevPage + 1);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Ocorreu um erro desconhecido.");
     } finally {
       setLoading(false);
     }
-  }, [search, format, page, hasMore, loading]);
+  }, [search, format, page]);
 
   useEffect(() => {
     setPage(1);
     setAnimes([]);
     setHasMore(true);
-    fetchMoreAnimes();
-  }, [search, format]);
+  }, [format]);
 
-  return useMemo(
-    () => ({ animes, loading, error, fetchMoreAnimes, hasMore }),
-    [animes, loading, error, hasMore, fetchMoreAnimes]
-  );
+  useEffect(() => {
+    fetchData();
+  }, [search, format, page]);
+
+  const handleFetchMore = useCallback(() => {
+    if (hasMore && !loading) {
+      setPage((prev) => prev + 1);
+    }
+  }, [hasMore, loading]);
+
+  return { animes, loading, error, handleFetchMore, hasMore };
 };
