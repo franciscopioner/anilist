@@ -15,7 +15,7 @@ const AnimeCard: React.FC<AnimeCardProps> = ({ anime }) => {
   };
 
   return (
-    <Card imageUrl={anime.coverImage.large} onClick={handleClick}>
+    <Card $imageUrl={anime.coverImage.large} onClick={handleClick}>
       <TitleContainer>
         <Title>{normalizeText(anime.title.romaji)}</Title>
         <GenresContainer>
@@ -26,7 +26,7 @@ const AnimeCard: React.FC<AnimeCardProps> = ({ anime }) => {
           )}
         </GenresContainer>
       </TitleContainer>
-      {anime.averageScore?.toString() && <Score score={anime.averageScore}>{anime.averageScore}%</Score>}
+      {anime.averageScore?.toString() && <Score $score={anime.averageScore}>{anime.averageScore}%</Score>}
     </Card>
   );
 };

@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-export const Card = styled.div<{ imageUrl: string }>`
+export const Card = styled.div<{ $imageUrl: string }>`
   background: 
     linear-gradient(to top, rgba(0, 0, 0, 0.17) 0%, rgba(0, 0, 0, 0.85) 100%),
-    url(${({ imageUrl }) => imageUrl}) center/cover no-repeat;
+    url(${({ $imageUrl }) => $imageUrl}) center/cover no-repeat;
   border-radius: 8px;
   overflow: hidden;
   text-align: center;
@@ -52,7 +52,7 @@ export const GenreTag = styled.span`
   font-weight: 400;
 `;
 
-export const Score = styled.span<{ score: number }>`
+export const Score = styled.span<{ $score: number }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -61,8 +61,8 @@ export const Score = styled.span<{ score: number }>`
   height: 37px;
   font-weight: 400;
   color: #e2e5e9;
-  background: ${({ score }) =>
-    score < 50 ? "#E92151" : score < 80 ? "#FFB800" : "#01ADA6"};
+  background: ${({ $score }) =>
+    $score < 50 ? "#E92151" : $score < 80 ? "#FFB800" : "#01ADA6"};
   border-radius: 5px;
   margin-left: auto;
 `;

@@ -1,6 +1,8 @@
 import { FilterContainer, FilterButton } from "./styles";
 
-const FORMAT_LABELS: Record<string, string> = {
+type Formats = "All" | "TV" | "TV_SHORT" | "MOVIE" | "SPECIAL" | "OVA" | "ONA" | "MUSIC";
+
+const FORMAT_LABELS: Record<Formats, string> = {
   All: "All Formats",
   TV: "TV Show",
   TV_SHORT: "TV Short",
@@ -11,11 +13,11 @@ const FORMAT_LABELS: Record<string, string> = {
   MUSIC: "Music",
 };
 
-const FORMATS = Object.keys(FORMAT_LABELS);
+const FORMATS = Object.keys(FORMAT_LABELS) as Formats[];
 
 interface FilterProps {
-  selectedFormat: string;
-  onFilterChange: (format: string) => void;
+  selectedFormat: Formats;
+  onFilterChange: (format: Formats) => void;
 }
 
 const Filter: React.FC<FilterProps> = ({ selectedFormat, onFilterChange }) => {
@@ -25,7 +27,7 @@ const Filter: React.FC<FilterProps> = ({ selectedFormat, onFilterChange }) => {
         <FilterButton
           key={format}
           onClick={() => onFilterChange(format)}
-          active={selectedFormat === format}
+          $active={selectedFormat === format}
         >
           {FORMAT_LABELS[format]}
         </FilterButton>

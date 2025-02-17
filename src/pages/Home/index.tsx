@@ -2,12 +2,13 @@ import { useCallback, useState } from "react";
 import AnimeList from "@components/AnimeList";
 import Filter from "@components/Filter";
 import SearchBar from "@components/SearchBar";
+import { Formats } from "@types";
 
 const Home: React.FC = () => {
   const [search, setSearch] = useState("");
-  const [selectedFormat, setSelectedFormat] = useState("All");
+  const [selectedFormat, setSelectedFormat] = useState<Formats>("All");
 
-  const handleFilterChange = useCallback((format: string) => {
+  const handleFilterChange = useCallback((format: Formats) => {
     setSelectedFormat(format);
   }, []);
 

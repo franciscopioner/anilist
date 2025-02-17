@@ -8,10 +8,10 @@ export const FilterContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-export const FilterButton = styled.button<{ active: boolean }>`
-  background-color: ${({ active }) => (active ? "#6324C6" : "white")};
-  color: ${({ active }) => (active ? "white" : "#6324C6")};
-  border: 1px solid ${({ active }) => (active ? "#6324C6" : "#6324C6")};
+export const FilterButton = styled.button<{ $active: boolean }>`
+  background-color: ${({ $active }) => ($active ? "#6324C6" : "white")};
+  color: ${({ $active }) => ($active ? "white" : "#6324C6")};
+  border: 1px solid ${({ $active }) => ($active ? "#6324C6" : "#6324C6")};
   padding: 8px 12px;
   border-radius: 5px;
   cursor: pointer;
