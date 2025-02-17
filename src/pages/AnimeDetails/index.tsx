@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
-import Loading from "../../components/Loading";
+import Loading from "@components/Loading";
 import { Banner, Title, Description, InfoContainer, Score, GenresContainer, GenreTag } from "./styles";
-import { useFetchAnimeDetails } from "../../hooks/useFetchAnimeDetails";
-import Modal from "../../components/Modal";
+import { useFetchAnimeDetails } from "@hooks/useFetchAnimeDetails";
+import Modal from "@components/Modal";
 
 const AnimeDetails: React.FC = () => {
   const { animeId } = useParams<{ animeId: string }>();

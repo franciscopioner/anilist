@@ -1,9 +1,9 @@
-import { useFetchAnimes } from "../../hooks/useFetchAnimes";
-import { Anime } from "../../types";
-import AnimeCard from "../AnimeCard";
+import { useFetchAnimes } from "@hooks/useFetchAnimes";
+import { Anime } from "@types";
+import AnimeCard from "@components/AnimeCard";
 import { AnimeGrid, LoadMoreButton } from "./styles";
-import Loading from "../Loading";
-import Modal from "../Modal";
+import Loading from "@components//Loading";
+import Modal from "@components//Modal";
 
 interface AnimeListProps {
   search: string;

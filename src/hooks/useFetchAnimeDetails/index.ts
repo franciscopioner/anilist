@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { fetchAnimeDetails } from "../../services/fetchAnimeDetails";
-import { Anime } from "../../types";
+import { fetchAnimeDetails } from "@services/fetchAnimeDetails";
+import { Anime } from "@types";
 
 export const useFetchAnimeDetails = (animeId: number) => {
   const [anime, setAnime] = useState<Anime | null>(null);

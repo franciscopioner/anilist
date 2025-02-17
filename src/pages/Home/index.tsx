@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
-import AnimeList from "../../components/AnimeList";
-import Filter from "../../components/Filter";
-import SearchBar from "../../components/SearchBar";
+import AnimeList from "@components/AnimeList";
+import Filter from "@components/Filter";
+import SearchBar from "@components/SearchBar";
 
 const Home: React.FC = () => {
   const [search, setSearch] = useState("");

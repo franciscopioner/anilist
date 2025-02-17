@@ -1,6 +1,6 @@
 import { renderHook, act } from "@testing-library/react";
-import { useFetchAnimes } from "../index";
-import { fetchAnimes } from "../../../api/anilist";
+import { useFetchAnimes } from "../";
+import { fetchAnimes } from "@api/anilist";
 
 jest.mock("../../../api/anilist", () => ({
   fetchAnimes: jest.fn(),

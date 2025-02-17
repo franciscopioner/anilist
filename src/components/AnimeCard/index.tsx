@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { Anime } from "../../types";
+import { Anime } from "@types";
 import { Card, Title, Score, GenresContainer, GenreTag, TitleContainer } from "./styles";
-import { normalizeText } from "../../utils/normalize";
+import { normalizeText } from "@utils/normalize";
 
 interface AnimeCardProps {
   anime: Anime;

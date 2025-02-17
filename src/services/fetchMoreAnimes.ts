@@ -1,5 +1,5 @@
 import { fetchAnimes } from "./fetchAnimes";
-import { Anime } from "../types";
+import { Anime } from "@types";
 
 type FetchMoreAnimesProps = {
   search: string;

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
-import { fetchAnimes } from "../../api/anilist";
-import { Anime } from "../../types";
+import { fetchAnimes } from "@api/anilist";
+import { Anime } from "@types";
 
 export const useFetchAnimes = (search: string, format: string) => {
   const [animes, setAnimes] = useState<Anime[]>([]);

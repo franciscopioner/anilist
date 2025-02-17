@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { useFetchAnimeDetails } from '../index';
-import { fetchAnimeDetails } from '../../../services/fetchAnimeDetails';
+import { useFetchAnimeDetails } from '../';
+import { fetchAnimeDetails } from '@services/fetchAnimeDetails';
 
 jest.mock('../../../services/fetchAnimeDetails', () => ({
   fetchAnimeDetails: jest.fn(),
