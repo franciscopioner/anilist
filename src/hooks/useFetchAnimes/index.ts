@@ -40,5 +40,5 @@ export const useFetchAnimes = (search: string, format: string) => {
     }
   }, [hasMore, loading]);
 
-  return { animes, loading, error, handleFetchMore, hasMore };
+  return { animes, loading, error, handleFetchMore, hasMore, page };
 };
