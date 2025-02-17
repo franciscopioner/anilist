@@ -9,9 +9,9 @@ export const FilterContainer = styled.div`
 `;
 
 export const FilterButton = styled.button<{ $active: boolean }>`
-  background-color: ${({ $active }) => ($active ? "#6324C6" : "white")};
-  color: ${({ $active }) => ($active ? "white" : "#6324C6")};
-  border: 1px solid ${({ $active }) => ($active ? "#6324C6" : "#6324C6")};
+  background-color: ${({ $active, theme }) => ($active ? theme.primary : "white")};
+  color: ${({ $active, theme }) => ($active ? "white" : theme.primary)};
+  border: 1px solid ${({ $active, theme }) => ($active ? theme.primary : theme.primary)};
   padding: 8px 12px;
   border-radius: 5px;
   cursor: pointer;
@@ -19,7 +19,8 @@ export const FilterButton = styled.button<{ $active: boolean }>`
   transition: all 0.3s ease;
 
   &:hover {
-    background-color: #6324C6;
+    background-color: ${({ theme }) => theme.primary};
     color: white;
   }
 `;
+

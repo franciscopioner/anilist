@@ -4,12 +4,14 @@ import { Container, LayoutWrapper } from "./styles";
 
 interface TemplateProps {
   children: React.ReactNode;
+  toggleTheme: () => void;
+  isDarkMode: boolean;
 }
 
-const Template: React.FC<TemplateProps> = ({ children }) => {
+const Template: React.FC<TemplateProps> = ({ children, toggleTheme, isDarkMode }) => {
   return (
     <LayoutWrapper>
-      <Header />
+      <Header toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
       <Container>{children}</Container>
       <Footer />
     </LayoutWrapper>

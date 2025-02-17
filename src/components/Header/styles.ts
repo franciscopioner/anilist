@@ -2,15 +2,16 @@ import styled from "styled-components";
 
 export const HeaderContainer = styled.header`
   width: 100%;
-  background-color: #6324C6;
+  background-color: ${({ theme }) => theme.primary};
   color: white;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 15px 0;
   font-weight: bold;
-  top: 0;
-  left: 0;
   font-size: 40px;
   font-weight: 400;
+  position: relative;
 `;
 
 export const Highlight = styled.span`

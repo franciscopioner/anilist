@@ -8,6 +8,7 @@ export const AnimeGrid = styled.div`
   width: 100%;
   max-width: 1366px;
   justify-content: center;
+  background-color: ${({ theme }) => theme.background};
 
   @media (max-width: 1024px) {
     grid-template-columns: repeat(3, 1fr);
@@ -23,7 +24,7 @@ export const AnimeGrid = styled.div`
 `;
 
 export const ErrorMessage = styled.p`
-  color: #ff4d4f;
+  color: ${({ theme }) => theme.error};
   background: #fff2f0;
   border: 1px solid #ffccc7;
   padding: 10px;
@@ -43,7 +44,7 @@ export const LoadMoreButton = styled.button`
   padding: 10px;
   margin-top: 20px;
   font-size: 16px;
-  background-color: #FFB800;
+  background-color: ${({ theme }) => theme.secondary};
   color: white;
   border: none;
   border-radius: 5px;
@@ -51,7 +52,7 @@ export const LoadMoreButton = styled.button`
   transition: background 0.3s ease;
 
   &:hover {
-    background-color: #6324C6;
+    background-color: ${({ theme }) => theme.primary};
   }
 
   @media (max-width: 768px) {
