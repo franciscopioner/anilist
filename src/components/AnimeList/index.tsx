@@ -13,7 +13,7 @@ interface AnimeListProps {
 const AnimeList: React.FC<AnimeListProps> = ({ search, selectedFormat }) => {
   const { animes, loading, error, handleFetchMore, hasMore } = useFetchAnimes(search, selectedFormat);
 
-  if (loading && animes.length === 0) {
+  if (loading) {
     return <Loading />;
   }
 
@@ -45,7 +45,6 @@ const AnimeList: React.FC<AnimeListProps> = ({ search, selectedFormat }) => {
           {loading ? "Carregando..." : "+ Ver mais"}
         </LoadMoreButton>
       )}
-      {loading && animes.length > 0 && <Loading />}
     </>
   );
 };

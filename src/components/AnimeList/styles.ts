@@ -6,8 +6,20 @@ export const AnimeGrid = styled.div`
   grid-template-rows: repeat(3, auto); 
   gap: 20px;
   width: 100%;
-  max-width: 1366;
+  max-width: 1366px;
   justify-content: center;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const ErrorMessage = styled.p`
@@ -19,6 +31,10 @@ export const ErrorMessage = styled.p`
   text-align: center;
   font-weight: bold;
   margin: 10px 0;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
 `;
 
 export const LoadMoreButton = styled.button`
@@ -36,5 +52,15 @@ export const LoadMoreButton = styled.button`
 
   &:hover {
     background-color: #6324C6;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px;
+    font-size: 12px;
   }
 `;

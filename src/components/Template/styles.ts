@@ -9,6 +9,7 @@ export const Container = styled.main`
   margin: 0 auto;
   width: 100%;
   flex: 1;
+  box-sizing: border-box;
 `;
 
 export const LayoutWrapper = styled.div`
