@@ -8,12 +8,19 @@ const SearchBar: React.FC<{ onSearch: (value: string) => void }> = ({ onSearch }
     onSearch(inputValue);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   return (
     <SearchBarContainer>
       <SearchInput
         type="text"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
+        onKeyDown={handleKeyDown}
         placeholder="Buscar anime..."
       />
       <SearchButton onClick={handleSearch}>Buscar</SearchButton>
