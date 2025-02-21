@@ -13,10 +13,6 @@ interface AnimeListProps {
 const AnimeList: React.FC<AnimeListProps> = ({ search, selectedFormat }) => {
   const { animes, loading, error, handleFetchMore, hasMore } = useFetchAnimes(search, selectedFormat);
 
-  if (loading) {
-    return <Loading />;
-  }
-
   if (error) {
     return (
       <Modal>
@@ -35,6 +31,7 @@ const AnimeList: React.FC<AnimeListProps> = ({ search, selectedFormat }) => {
 
   return (
     <>
+    {loading && <Loading />}
       <AnimeGrid>
         {animes.map((anime: Anime) => (
           <AnimeCard key={anime.id} anime={anime} />
