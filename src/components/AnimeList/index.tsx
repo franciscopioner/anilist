@@ -2,15 +2,12 @@ import { useFetchAnimes } from "@hooks/useFetchAnimes";
 import { Anime } from "@types";
 import AnimeCard from "@components/AnimeCard";
 import { AnimeGrid, LoadMoreButton } from "./styles";
-import Loading from "@components//Loading";
-import Modal from "@components//Modal";
+import Loading from "@components/Loading";
+import Modal from "@components/Modal";
+import { useAnimeContext } from "@context/AnimeContext";
 
-interface AnimeListProps {
-  search: string;
-  selectedFormat: string;
-}
-
-const AnimeList: React.FC<AnimeListProps> = ({ search, selectedFormat }) => {
+const AnimeList: React.FC = () => {
+  const { search, selectedFormat } = useAnimeContext();
   const { animes, loading, error, handleFetchMore, hasMore } = useFetchAnimes(search, selectedFormat);
 
   if (error) {
@@ -31,7 +28,7 @@ const AnimeList: React.FC<AnimeListProps> = ({ search, selectedFormat }) => {
 
   return (
     <>
-    {loading && <Loading />}
+      {loading && <Loading />}
       <AnimeGrid>
         {animes.map((anime: Anime) => (
           <AnimeCard key={anime.id} anime={anime} />

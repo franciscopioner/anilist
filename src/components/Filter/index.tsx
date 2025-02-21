@@ -1,6 +1,6 @@
 import { FilterContainer, FilterButton } from "./styles";
-
-type Formats = "All" | "TV" | "TV_SHORT" | "MOVIE" | "SPECIAL" | "OVA" | "ONA" | "MUSIC";
+import { useAnimeContext } from "@context/AnimeContext";
+import { Formats } from "@types";
 
 const FORMAT_LABELS: Record<Formats, string> = {
   All: "All Formats",
@@ -15,18 +15,15 @@ const FORMAT_LABELS: Record<Formats, string> = {
 
 const FORMATS = Object.keys(FORMAT_LABELS) as Formats[];
 
-interface FilterProps {
-  selectedFormat: Formats;
-  onFilterChange: (format: Formats) => void;
-}
+const Filter: React.FC = () => {
+  const { selectedFormat, setSelectedFormat } = useAnimeContext();
 
-const Filter: React.FC<FilterProps> = ({ selectedFormat, onFilterChange }) => {
   return (
     <FilterContainer>
       {FORMATS.map((format) => (
         <FilterButton
           key={format}
-          onClick={() => onFilterChange(format)}
+          onClick={() => setSelectedFormat(format)}
           $active={selectedFormat === format}
         >
           {FORMAT_LABELS[format]}

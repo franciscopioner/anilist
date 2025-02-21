@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { SearchBarContainer, SearchButton, SearchInput } from "./styles";
+import { useAnimeContext } from "@context/AnimeContext";
 
-const SearchBar: React.FC<{ onSearch: (value: string) => void }> = ({ onSearch }) => {
+const SearchBar: React.FC = () => {
+  const { setSearch } = useAnimeContext();
   const [inputValue, setInputValue] = useState("");
 
   const handleSearch = () => {
-    onSearch(inputValue);
+    setSearch(inputValue);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
