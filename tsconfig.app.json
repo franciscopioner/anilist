@@ -12,6 +12,7 @@
       "@types/*": ["types/*"],
       "@utils/*": ["utils/*"],
       "@context/*": ["context/*"],
+      "@routes/*": ["routes/*"],
     },
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "target": "ES2020",
