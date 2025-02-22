@@ -1,6 +1,6 @@
 import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
-import { darkTheme, GlobalStyle } from "./styles/global";
+import { darkTheme, GlobalStyle } from "@styles/global";
 import Template from "@components/Template";
 import { AnimeProvider } from "@context/AnimeContext";
 import { useAppContext } from "@context/AppContext";

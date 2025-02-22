@@ -14,12 +14,17 @@ export const ModalOverlay = styled.div`
 `;
 
 export const ModalContent = styled.div`
-  background-color: white;
+  background-color: ${({ theme }) => theme.cardBackground};
   padding: 20px;
   border-radius: 8px;
   position: relative;
   width: 400px;
   max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
 `;
 
 export const CloseButton = styled.button`
@@ -30,5 +35,10 @@ export const CloseButton = styled.button`
   border: none;
   font-size: 16px;
   cursor: pointer;
-  color: #333;
+  color: ${({ theme }) => theme.text};
+`;
+
+export const ModalIcon = styled.div`
+  font-size: 50px;
+  margin-bottom: 15px;
 `;

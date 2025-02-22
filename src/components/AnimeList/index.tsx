@@ -5,22 +5,21 @@ import { AnimeGrid, LoadMoreButton } from "./styles";
 import Loading from "@components/Loading";
 import Modal from "@components/Modal";
 import { useAnimeContext } from "@context/AnimeContext";
+import { useState, useEffect } from "react";
 
 const AnimeList: React.FC = () => {
   const { search, selectedFormat } = useAnimeContext();
   const { animes, loading, error, handleFetchMore, hasMore } = useFetchAnimes(search, selectedFormat);
 
-  if (error) {
-    return (
-      <Modal>
-        {error.includes("Erro ao buscar animes") ? (
-          <div>Erro ao carregar animes. Verifique sua conexão e tente novamente.</div>
-        ) : (
-          <div>Ocorreu um erro inesperado. Tente novamente mais tarde.</div>
-        )}
-      </Modal>
-    );
-  }
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const closeModal = () => setIsModalVisible(false);
+
+  useEffect(() => {
+    if (error) {
+      setIsModalVisible(true);
+    }
+  }, [error]);
 
   if (!loading && animes.length === 0 && search) {
     return <div>Nenhum resultado encontrado para esta busca.</div>;
@@ -28,6 +27,16 @@ const AnimeList: React.FC = () => {
 
   return (
     <>
+      {isModalVisible && (
+        <Modal onClose={closeModal} variant="error">
+          {error?.includes("Erro ao buscar animes") ? (
+            <div>Erro ao carregar animes. Verifique sua conexão e tente novamente.</div>
+          ) : (
+            <div>Ocorreu um erro inesperado. Tente novamente mais tarde.</div>
+          )}
+        </Modal>
+      )}
+
       {loading && <Loading />}
       <AnimeGrid>
         {animes.map((anime: Anime) => (
