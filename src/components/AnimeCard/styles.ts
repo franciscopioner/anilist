@@ -17,6 +17,7 @@ export const Card = styled.div<{ $imageUrl: string }>`
   width: 100%;
   max-width: 317px;
   min-height: 270px;
+  position: relative;
 
   &:hover {
     transform: scale(1.05);

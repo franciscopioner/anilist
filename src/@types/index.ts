@@ -17,4 +17,4 @@ export type Anime = {
   description: string;
 };
 
-export type Formats = "All" | "TV" | "TV_SHORT" | "MOVIE" | "SPECIAL" | "OVA" | "ONA" | "MUSIC";
+export type Formats = "All" | "TV" | "TV_SHORT" | "MOVIE" | "SPECIAL" | "OVA" | "ONA" | "MUSIC" | "FAVORITES";

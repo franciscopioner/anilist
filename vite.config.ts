@@ -18,5 +18,14 @@ export default defineConfig({
       '@context': path.resolve(__dirname, 'src/context'),
       '@routes': path.resolve(__dirname, 'src/routes'),
     }
-  }
+  },
+  server: {
+    proxy: {
+      "/graphql": {
+        target: "https://graphql.anilist.co",
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
 });

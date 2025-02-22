@@ -11,6 +11,7 @@ const FORMAT_LABELS: Record<Formats, string> = {
   OVA: "OVA",
   ONA: "ONA",
   MUSIC: "Music",
+  FAVORITES: "Favorites",
 };
 
 const FORMATS = Object.keys(FORMAT_LABELS) as Formats[];

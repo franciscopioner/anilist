@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { Anime } from "@types";
 import { Card, Title, Score, GenresContainer, GenreTag, TitleContainer } from "./styles";
 import { normalizeText } from "@utils/normalize";
+import { useFavoritesContext } from "@context/FavoritesContext";
+import { HeartButton } from "@components/HeartButton";
 
 interface AnimeCardProps {
   anime: Anime;
@@ -9,9 +11,20 @@ interface AnimeCardProps {
 
 const AnimeCard: React.FC<AnimeCardProps> = ({ anime }) => {
   const navigate = useNavigate();
+  const { addFavorite, removeFavorite, isFavorite } = useFavoritesContext();
+  const isFavorited = isFavorite(anime.id);
 
   const handleClick = () => {
     navigate(`/anime/${anime.id}`);
+  };
+
+  const handleFavoriteClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isFavorited) {
+      removeFavorite(anime.id);
+    } else {
+      addFavorite(anime.id);
+    }
   };
 
   return (
@@ -27,6 +40,9 @@ const AnimeCard: React.FC<AnimeCardProps> = ({ anime }) => {
         </GenresContainer>
       </TitleContainer>
       {anime.averageScore?.toString() && <Score $score={anime.averageScore}>{anime.averageScore}%</Score>}
+      <HeartButton onClick={handleFavoriteClick} $isFavorited={isFavorited}>
+        {isFavorited ? "❤️" : "🤍"}
+      </HeartButton>
     </Card>
   );
 };

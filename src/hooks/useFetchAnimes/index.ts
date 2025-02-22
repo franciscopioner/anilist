@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { fetchAnimes } from "@api/anilist";
 import { Anime } from "@types";
+import { useFavoritesContext } from "@context/FavoritesContext";
 
 export const useFetchAnimes = (search: string, format: string) => {
   const [animes, setAnimes] = useState<Anime[]>([]);
@@ -8,21 +9,29 @@ export const useFetchAnimes = (search: string, format: string) => {
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const { favorites } = useFavoritesContext();
 
   const fetchData = useCallback(async () => {
     setLoading(true);
     setError(null);
 
     try {
-      const data = await fetchAnimes({ search, format, page });
-      setAnimes((prev) => (page === 1 ? data.media : [...prev, ...data.media]));
-      setHasMore(data.pageInfo.hasNextPage);
+      if (format === "FAVORITES") {
+        const data = await fetchAnimes({ search, format: "All", page, perPage: 1000 });
+        const filteredAnimes = data.media.filter((anime: Anime) => favorites.includes(anime.id));
+        setAnimes(filteredAnimes);
+        setHasMore(false);
+      } else {
+        const data = await fetchAnimes({ search, format, page });
+        setAnimes((prev) => (page === 1 ? data.media : [...prev, ...data.media]));
+        setHasMore(data.pageInfo.hasNextPage);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Ocorreu um erro desconhecido.");
     } finally {
       setLoading(false);
     }
-  }, [search, format, page]);
+  }, [search, format, page, favorites]);
 
   useEffect(() => {
     setPage(1);

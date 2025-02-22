@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://graphql.anilist.co";
+const API_URL = "/graphql";
 
 interface FetchAnimesParams {
   search?: string;
