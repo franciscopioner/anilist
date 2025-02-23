@@ -43,9 +43,9 @@ const AnimeList: React.FC = () => {
           <AnimeCard key={anime.id} anime={anime} />
         ))}
       </AnimeGrid>
-      {hasMore && (
+      {hasMore && !loading && (
         <LoadMoreButton onClick={handleFetchMore} disabled={loading}>
-          {loading ? "Carregando..." : "+ Ver mais"}
+          + Ver mais
         </LoadMoreButton>
       )}
     </>
