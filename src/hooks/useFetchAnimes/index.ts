@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { fetchAnimes } from "@api/anilist";
+import { fetchAnimes, fetchAnimesByIds } from "@api/anilist";
 import { Anime } from "@types";
 import { useFavoritesContext } from "@context/FavoritesContext";
 
@@ -17,9 +17,8 @@ export const useFetchAnimes = (search: string, format: string) => {
 
     try {
       if (format === "FAVORITES") {
-        const data = await fetchAnimes({ search, format: "All", page, perPage: 1000 });
-        const filteredAnimes = data.media.filter((anime: Anime) => favorites.includes(anime.id));
-        setAnimes(filteredAnimes);
+        const data = await fetchAnimesByIds(favorites);
+        setAnimes(data.media);
         setHasMore(false);
       } else {
         const data = await fetchAnimes({ search, format, page });
