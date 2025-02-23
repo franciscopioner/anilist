@@ -1,28 +1,16 @@
 import styled from "styled-components";
 
-export const HeartButton = styled.button<{ $isFavorited: boolean }>`
+export const HeartButton = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
   background: none;
   border: none;
   cursor: pointer;
   font-size: 24px;
-  color: ${({ $isFavorited }) => ($isFavorited ? "red" : "white")};
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 10;
-  opacity: 1;
-  transition: opacity 0.2s ease-in-out;
-
+  transition: transform 0.2s;
+  
   &:hover {
-    opacity: 0.8;
+    transform: scale(1.1);
   }
-`;
-
-export const DetailsHeartButton = styled(HeartButton)`
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: rgba(0, 0, 0, 0.7);
-  padding: 10px;
-  border-radius: 50%;
 `;

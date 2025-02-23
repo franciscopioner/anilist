@@ -40,7 +40,7 @@ const AnimeCard: React.FC<AnimeCardProps> = ({ anime }) => {
         </GenresContainer>
       </TitleContainer>
       {anime.averageScore?.toString() && <Score $score={anime.averageScore}>{anime.averageScore}%</Score>}
-      <HeartButton onClick={handleFavoriteClick} $isFavorited={isFavorited}>
+      <HeartButton onClick={handleFavoriteClick}>
         {isFavorited ? "❤️" : "🤍"}
       </HeartButton>
     </Card>

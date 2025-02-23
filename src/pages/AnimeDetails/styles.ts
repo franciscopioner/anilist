@@ -6,9 +6,37 @@ export const Container = styled.div`
   margin: 0 auto;
 `;
 
-export const Banner = styled.img`
+export const DefaultBannerContainer = styled.div`
   width: 100%;
   height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #666;
+  border-radius: 8px;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+`;
+
+export const IconWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+`;
+
+export const BannerContainer = styled.div`
+  position: relative;
+  display: block;
+  width: 100%;
+`;
+
+export const Banner = styled.img`
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   border-radius: 8px;
   margin-bottom: 20px;
@@ -40,7 +68,7 @@ export const InfoContainer = styled.div`
 export const Score = styled.div`
   font-size: 1.2rem;
   font-weight: bold;
-  color: #ffcc00;
+  color: ${({ theme }) => theme.secondary};
   margin-bottom: 10px;
 `;
 

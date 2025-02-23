@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
 import Loading from "@components/Loading";
-import { Banner, Title, Description, InfoContainer, Score, GenresContainer, GenreTag } from "./styles";
+import { Banner, Title, Description, InfoContainer, Score, GenresContainer, GenreTag, BannerContainer, DefaultBannerContainer, IconWrapper } from "./styles";
 import { useFetchAnimeDetails } from "@hooks/useFetchAnimeDetails";
 import Modal from "@components/Modal";
 import { useFavoritesContext } from "@context/FavoritesContext";
-import { DetailsHeartButton } from "@components/HeartButton";
 import { useEffect, useState } from "react";
+import { HeartButton } from "@components/HeartButton";
 
 const AnimeDetails: React.FC = () => {
   const { animeId } = useParams<{ animeId: string }>();
@@ -51,8 +51,20 @@ const AnimeDetails: React.FC = () => {
           )}
         </Modal>
       )}
-
-      {bannerImage && <Banner src={bannerImage} alt={`Banner de ${title.romaji}`} />}
+      <BannerContainer>
+        {bannerImage ? (
+          <Banner src={bannerImage} alt={`Banner de ${title.romaji}`} />
+        ) : (
+          <DefaultBannerContainer>
+            <IconWrapper>
+              <span>Imagem indisponível</span>
+            </IconWrapper>
+          </DefaultBannerContainer>
+        )}
+        <HeartButton onClick={handleFavoriteClick}>
+          {isFavorited ? "❤️" : "🤍"}
+        </HeartButton>
+      </BannerContainer>
       <Title>{title.romaji}</Title>
       {averageScore && <Score>⭐ {averageScore}%</Score>}
       <GenresContainer>
@@ -63,9 +75,6 @@ const AnimeDetails: React.FC = () => {
       <InfoContainer>
         <Description dangerouslySetInnerHTML={{ __html: description || "Descrição não disponível." }} />
       </InfoContainer>
-      <DetailsHeartButton onClick={handleFavoriteClick} $isFavorited={isFavorited}>
-        {isFavorited ? "❤️" : "🤍"}
-      </DetailsHeartButton>
     </>
   );
 };
