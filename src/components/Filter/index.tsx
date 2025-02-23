@@ -1,5 +1,5 @@
 import { FilterContainer, FilterButton } from "./styles";
-import { useAnimeContext } from "@context/AnimeContext";
+import { useAppContext } from "@context/AppContext";
 import { Formats } from "@types";
 
 const FORMAT_LABELS: Record<Formats, string> = {
@@ -17,7 +17,8 @@ const FORMAT_LABELS: Record<Formats, string> = {
 const FORMATS = Object.keys(FORMAT_LABELS) as Formats[];
 
 const Filter: React.FC = () => {
-  const { selectedFormat, setSelectedFormat } = useAnimeContext();
+  const { animeContext } = useAppContext();
+  const { selectedFormat, setSelectedFormat } = animeContext;
 
   return (
     <FilterContainer>

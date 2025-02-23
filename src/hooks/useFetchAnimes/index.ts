@@ -1,14 +1,15 @@
 import { useState, useEffect, useCallback } from "react";
 import { fetchAnimes, fetchAnimesByIds } from "@api/anilist";
 import { Anime } from "@types";
-import { useFavoritesContext } from "@context/FavoritesContext";
+import { useAppContext } from "@context/AppContext";
 
 export const useFetchAnimes = (search: string, format: string) => {
   const [animes, setAnimes] = useState<Anime[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [hasMore, setHasMore] = useState(true);
-  const { favorites } = useFavoritesContext();
+  const { favoriteContext } = useAppContext();
+  const { favorites } = favoriteContext;
   const [cache, setCache] = useState<Record<string, { pages: Record<number, Anime[]>; hasMore: boolean; currentPage: number }>>({});
 
   const currentPage = cache[`${search}-${format}`]?.currentPage || 1;

@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { SearchBarContainer, SearchButton, SearchInput } from "./styles";
-import { useAnimeContext } from "@context/AnimeContext";
+import { useAppContext } from "@context/AppContext";
 
 const SearchBar: React.FC = () => {
-  const { setSearch } = useAnimeContext();
+  const { animeContext } = useAppContext();
+  const { setSearch } = animeContext;
   const [inputValue, setInputValue] = useState("");
 
   const handleSearch = () => {

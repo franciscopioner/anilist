@@ -4,11 +4,12 @@ import AnimeCard from "@components/AnimeCard";
 import { AnimeGrid, LoadMoreButton } from "./styles";
 import Loading from "@components/Loading";
 import Modal from "@components/Modal";
-import { useAnimeContext } from "@context/AnimeContext";
 import { useState, useEffect } from "react";
+import { useAppContext } from "@context/AppContext";
 
 const AnimeList: React.FC = () => {
-  const { search, selectedFormat } = useAnimeContext();
+  const { animeContext } = useAppContext();
+  const { search, selectedFormat } = animeContext;
   const { animes, loading, error, handleFetchMore, hasMore } = useFetchAnimes(search, selectedFormat);
 
   const [isModalVisible, setIsModalVisible] = useState(false);

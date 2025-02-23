@@ -1,4 +1,3 @@
-// src/services/anime/fetchAnimes.ts
 import { fetchApi } from "../client/apiClient";
 
 interface FetchAnimesParams {

@@ -3,14 +3,15 @@ import Loading from "@components/Loading";
 import { Banner, Title, Description, InfoContainer, Score, GenresContainer, GenreTag, BannerContainer, DefaultBannerContainer, IconWrapper } from "./styles";
 import { useFetchAnimeDetails } from "@hooks/useFetchAnimeDetails";
 import Modal from "@components/Modal";
-import { useFavoritesContext } from "@context/FavoritesContext";
 import { useEffect, useState } from "react";
 import { HeartButton } from "@components/HeartButton";
+import { useAppContext } from "@context/AppContext";
 
 const AnimeDetails: React.FC = () => {
   const { animeId } = useParams<{ animeId: string }>();
   const { anime, loading, error } = useFetchAnimeDetails(Number(animeId));
-  const { addFavorite, removeFavorite, isFavorite } = useFavoritesContext();
+  const { favoriteContext } = useAppContext();
+  const { addFavorite, removeFavorite, isFavorite } = favoriteContext;
   const isFavorited = isFavorite(Number(animeId));
   const [isModalVisible, setIsModalVisible] = useState(false);
 

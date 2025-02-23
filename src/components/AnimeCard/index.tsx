@@ -2,8 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { Anime } from "@types";
 import { Card, Title, Score, GenresContainer, GenreTag, TitleContainer } from "./styles";
 import { normalizeText } from "@utils/normalize";
-import { useFavoritesContext } from "@context/FavoritesContext";
 import { HeartButton } from "@components/HeartButton";
+import { useAppContext } from "@context/AppContext";
 
 interface AnimeCardProps {
   anime: Anime;
@@ -11,7 +11,8 @@ interface AnimeCardProps {
 
 const AnimeCard: React.FC<AnimeCardProps> = ({ anime }) => {
   const navigate = useNavigate();
-  const { addFavorite, removeFavorite, isFavorite } = useFavoritesContext();
+  const { favoriteContext } = useAppContext();
+  const { addFavorite, removeFavorite, isFavorite } = favoriteContext;
   const isFavorited = isFavorite(anime.id);
 
   const handleClick = () => {
