@@ -1,6 +1,5 @@
-import axios from "axios";
-
-const API_URL = "/graphql";
+// src/services/anime/fetchAnimes.ts
+import { fetchApi } from "../client/apiClient";
 
 interface FetchAnimesParams {
   search?: string;
@@ -10,28 +9,24 @@ interface FetchAnimesParams {
 }
 
 export const fetchAnimes = async ({ search, format, page = 1, perPage = 12 }: FetchAnimesParams) => {
-  try {
-    const response = await axios.post(API_URL, {
-      query: `
-        query ($search: String, $format: MediaFormat, $page: Int, $perPage: Int) {
-          Page(page: $page, perPage: $perPage) {
-            media(search: $search, format: $format, type: ANIME) {
-              id
-              title { romaji }
-              coverImage { large }
-              format
-              averageScore
-              genres
-            }
-            pageInfo { hasNextPage }
-          }
+  const query = `
+    query ($search: String, $format: MediaFormat, $page: Int, $perPage: Int) {
+      Page(page: $page, perPage: $perPage) {
+        media(search: $search, format: $format, type: ANIME) {
+          id
+          title { romaji }
+          coverImage { large }
+          format
+          averageScore
+          genres
         }
-      `,
-      variables: { search: search || null, format: format !== "All" ? format : undefined, page, perPage },
-    });
+        pageInfo { hasNextPage }
+      }
+    }
+  `;
 
-    return response.data.data.Page;
-  } catch (error) {
-    throw new Error(`Erro ao buscar animes. Verifique sua conexão e tente novamente. ERRO: ${error}`);
-  }
+  const variables = { search, format, page, perPage };
+
+  const data = await fetchApi({ query, variables });
+  return data.Page;
 };
