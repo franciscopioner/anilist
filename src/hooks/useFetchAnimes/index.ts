@@ -7,11 +7,22 @@ export const useFetchAnimes = (search: string, format: string) => {
   const [animes, setAnimes] = useState<Anime[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const { favorites } = useFavoritesContext();
+  const [cache, setCache] = useState<Record<string, { pages: Record<number, Anime[]>; hasMore: boolean; currentPage: number }>>({});
+
+  const currentPage = cache[`${search}-${format}`]?.currentPage || 1;
 
   const fetchData = useCallback(async () => {
+    const cacheKey = `${search}-${format}`;
+
+    if (cache[cacheKey] && cache[cacheKey].pages[currentPage]) {
+      const cachedAnimes = Object.values(cache[cacheKey].pages).flat();
+      setAnimes(cachedAnimes);
+      setHasMore(cache[cacheKey].hasMore);
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
@@ -20,33 +31,60 @@ export const useFetchAnimes = (search: string, format: string) => {
         const data = await fetchAnimesByIds(favorites);
         setAnimes(data.media);
         setHasMore(false);
+        setCache((prev) => ({
+          ...prev,
+          [cacheKey]: { pages: { 1: data.media }, hasMore: false, currentPage: 1 },
+        }));
       } else {
-        const data = await fetchAnimes({ search, format, page });
-        setAnimes((prev) => (page === 1 ? data.media : [...prev, ...data.media]));
+        const data = await fetchAnimes({ search, format, page: currentPage });
+        const newAnimes = data.media;
+        setAnimes((prev) => (currentPage === 1 ? newAnimes : [...prev, ...newAnimes]));
         setHasMore(data.pageInfo.hasNextPage);
+        setCache((prev) => ({
+          ...prev,
+          [cacheKey]: {
+            pages: { ...prev[cacheKey]?.pages, [currentPage]: newAnimes },
+            hasMore: data.pageInfo.hasNextPage,
+            currentPage: currentPage,
+          },
+        }));
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Ocorreu um erro desconhecido.");
     } finally {
       setLoading(false);
     }
-  }, [search, format, page, favorites]);
+  }, [search, format, currentPage, favorites, cache]);
 
   useEffect(() => {
-    setPage(1);
-    setAnimes([]);
-    setHasMore(true);
-  }, [format]);
+    const cacheKey = `${search}-${format}`;
+    if (format === "FAVORITES") {
+      fetchAnimesByIds(favorites).then((data) => {
+        setCache((prev) => ({
+          ...prev,
+          [cacheKey]: { pages: { 1: data.media }, hasMore: false, currentPage: 1 },
+        }));
+        setAnimes(data.media);
+      });
+    }
+  }, [favorites, format, search]);
 
   useEffect(() => {
     fetchData();
-  }, [search, format, page]);
+  }, [search, format, currentPage]);
 
   const handleFetchMore = useCallback(() => {
     if (hasMore && !loading) {
-      setPage((prev) => prev + 1);
+      const cacheKey = `${search}-${format}`;
+      setCache((prev) => ({
+        ...prev,
+        [cacheKey]: {
+          ...prev[cacheKey],
+          currentPage: currentPage + 1,
+        },
+      }));
     }
-  }, [hasMore, loading]);
+  }, [hasMore, loading, search, format, currentPage]);
 
-  return { animes, loading, error, handleFetchMore, hasMore, page };
+  return { animes, loading, error, handleFetchMore, hasMore };
 };
