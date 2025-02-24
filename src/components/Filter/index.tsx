@@ -1,6 +1,7 @@
-import { FilterContainer, FilterButton } from "./styles";
+import { FilterContainer, FilterButton, SortButtonContainer, SortButton } from "./styles";
 import { useAppContext } from "@context/AppContext";
 import { Formats } from "@types";
+import { FaSortAlphaDown, FaSortNumericDownAlt } from "react-icons/fa";
 
 const FORMAT_LABELS: Record<Formats, string> = {
   All: "All Formats",
@@ -18,7 +19,15 @@ const FORMATS = Object.keys(FORMAT_LABELS) as Formats[];
 
 const Filter: React.FC = () => {
   const { animeContext } = useAppContext();
-  const { selectedFormat, setSelectedFormat } = animeContext;
+  const { selectedFormat, setSelectedFormat, sortBy, setSortBy } = animeContext;
+
+  const handleSortByTitle = () => {
+    setSortBy("title");
+  };
+
+  const handleSortByScore = () => {
+    setSortBy("score");
+  };
 
   return (
     <FilterContainer>
@@ -31,6 +40,20 @@ const Filter: React.FC = () => {
           {FORMAT_LABELS[format]}
         </FilterButton>
       ))}
+      <SortButtonContainer>
+        <SortButton
+          onClick={handleSortByTitle}
+          $active={sortBy === "title"}
+        >
+          <FaSortAlphaDown style={{ fontSize: "1.5rem" }} />
+        </SortButton>
+        <SortButton
+          onClick={handleSortByScore}
+          $active={sortBy === "score"}
+        >
+          <FaSortNumericDownAlt style={{ fontSize: "1.5rem" }} />
+        </SortButton>
+      </SortButtonContainer>
     </FilterContainer>
   );
 };

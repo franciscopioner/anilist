@@ -6,6 +6,8 @@ interface AnimeContextType {
   setSearch: (search: string) => void;
   selectedFormat: Formats;
   setSelectedFormat: (format: Formats) => void;
+  sortBy: string;
+  setSortBy: (sortBy: string) => void;
 }
 
 const AnimeContext = createContext<AnimeContextType | undefined>(undefined);
@@ -13,9 +15,12 @@ const AnimeContext = createContext<AnimeContextType | undefined>(undefined);
 export const AnimeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [search, setSearch] = useState<string>("");
   const [selectedFormat, setSelectedFormat] = useState<Formats>("All");
+  const [sortBy, setSortBy] = useState<string>("title");
 
   return (
-    <AnimeContext.Provider value={{ search, setSearch, selectedFormat, setSelectedFormat }}>
+    <AnimeContext.Provider
+      value={{ search, setSearch, selectedFormat, setSelectedFormat, sortBy, setSortBy }}
+    >
       {children}
     </AnimeContext.Provider>
   );

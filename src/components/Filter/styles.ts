@@ -24,3 +24,25 @@ export const FilterButton = styled.button<{ $active: boolean }>`
   }
 `;
 
+export const SortButtonContainer = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+`;
+
+export const SortButton = styled.button<{ $active: boolean }>`
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: ${({ $active, theme }) => ($active ? theme.primary : "#f0f0f0")};
+  color: ${({ $active, theme }) => ($active ? "white" : theme.primary)};
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: ${({ $active, theme }) => ($active ? theme.primary : "#d0d0d0")};
+  }
+`;

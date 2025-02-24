@@ -8,8 +8,9 @@ export const useFetchAnimes = (search: string, format: string) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [hasMore, setHasMore] = useState(true);
-  const { favoriteContext } = useAppContext();
+  const { favoriteContext, animeContext } = useAppContext();
   const { favorites } = favoriteContext;
+  const { sortBy } = animeContext;
   const [cache, setCache] = useState<Record<string, { pages: Record<number, Anime[]>; hasMore: boolean; currentPage: number }>>({});
 
   const currentPage = cache[`${search}-${format}`]?.currentPage || 1;
@@ -87,5 +88,16 @@ export const useFetchAnimes = (search: string, format: string) => {
     }
   }, [hasMore, loading, search, format, currentPage]);
 
-  return { animes, loading, error, handleFetchMore, hasMore };
+  const sortedAnimes = [...animes].sort((a, b) => {
+    if (sortBy === "title") {
+      const titleA = a.title.english || a.title.romaji || "";
+      const titleB = b.title.english || b.title.romaji || "";
+      return titleA.localeCompare(titleB);
+    } else if (sortBy === "score") {
+      return b.averageScore - a.averageScore;
+    }
+    return 0;
+  });
+
+  return { animes: sortedAnimes, loading, error, handleFetchMore, hasMore };
 };
